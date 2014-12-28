@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 
-#swig -c++ -python -o LeapPython.cpp -interface LeapPython Leap.i
+#setup.py build_ext --inplace
 
 from distutils.core import setup, Extension
 
-#module = Extension('LeapPython',
-#                   sources=['LeapPython.cpp'],
-#                   )
-
-module = Extension('LeapPython',
+module = Extension('_Leap',
                    sources=['Leap.i'],
-                   swig_opts=['-c++',]
+                   swig_opts=['-c++',],
+                   libraries=['Leap'],
+                   library_dirs=['.',],
                    )
 
 setup(name = 'example',
