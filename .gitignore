@@ -1,0 +1,9 @@
+*.pyc
+Leap.egg-info
+build
+dist
+Leap/Leap.i
+Leap/Leap.py
+Leap/Leap_wrap.*
+Leap/*.dylib
+Leap/Leap.so
