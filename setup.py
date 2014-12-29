@@ -2,16 +2,36 @@
 
 #setup.py build_ext --inplace
 
-from distutils.core import setup, Extension
+import os, os.path, platform
+from setuptools import setup, Extension
 
-module = Extension('_Leap',
-                   sources=['Leap.i'],
-                   swig_opts=['-c++',],
+LEAP_SDK_DIR = r'../LeapSDK'
+LEAP_LIB = 'libLeap.dylib'
+
+def copy_files_to_package():
+    import shutil
+    shutil.copy(
+        os.path.join(LEAP_SDK_DIR, 'lib', LEAP_LIB),
+        'Leap')
+
+    shutil.copy(
+        os.path.join(LEAP_SDK_DIR, 'include', 'Leap.i'),
+        'Leap')
+    print('copied files to package')
+    
+
+module = Extension('Leap._Leap',
+                   sources=['Leap/Leap.i'],
+                   swig_opts=['-c++', '-I'+os.path.join(LEAP_SDK_DIR, 'include')],
+                   include_dirs = [os.path.join(LEAP_SDK_DIR, 'include'),],
                    libraries=['Leap'],
-                   library_dirs=['.',],
+                   library_dirs=['Leap',],
                    )
 
-setup(name = 'example',
+copy_files_to_package()
+setup(name = 'Leap',
+      description = 'Leap Motion SDK Python wrapper',
+      packages=['Leap'],
       ext_modules = [module],
-      py_modules = ['Leap'],
+      package_data={'Leap': [LEAP_LIB,]},
       )
