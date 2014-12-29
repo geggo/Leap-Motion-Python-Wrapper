@@ -6,4 +6,4 @@ Leap/Leap.i
 Leap/Leap.py
 Leap/Leap_wrap.*
 Leap/*.dylib
-Leap/Leap.so
+Leap/_Leap.so
